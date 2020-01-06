@@ -57,6 +57,7 @@ footer a {
 #settings > .field {
   display: flex;
   flex-direction: column;
+  width: 64px;
 }
 
 #container {

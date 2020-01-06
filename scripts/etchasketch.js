@@ -3,11 +3,15 @@ const settingsForm = document.getElementById("settings");
 
 const etchasketch = (container => {
   const newSquare = () => {
-    let square = document.createElement("div");
-    square.className = "square";
-    square.addEventListener("mouseover", e => {
+    const fill = e => {
       e.target.style.backgroundColor = "black";
-    });
+    };
+
+    let square = document.createElement("div");
+
+    square.className = "square";
+    square.addEventListener("mouseover", fill);
+
     return square;
   };
 
@@ -21,6 +25,17 @@ const etchasketch = (container => {
     // fill container with empty squares
     for (let i = 0; i < rows * cols; i++) container.appendChild(newSquare());
   };
+
+  const touchFill = e => {
+    console.log(e.touches);
+    Object.values(e.touches).forEach(touch => {
+      let square = document.elementFromPoint(touch.clientX, touch.clientY);
+
+      if (square) square.dispatchEvent(new Event("mouseover"));
+    });
+  };
+
+  container.addEventListener("touchmove", touchFill);
 
   return { initBoard };
 })(container);
